@@ -38,10 +38,12 @@ const thoughtController = {
   },
 
   createThought({ params, body }, res) {
+    console.log(params);
+
     Thought.create(body)
       .then(({ _id }) => {
-        return User.findOneAndUpdate(
-          { _id: params.userId },
+        return User.findByIdAndUpdate(
+          { _id: params.username },
           { $push: { thoughts: _id } },
           { new: true }
         );
